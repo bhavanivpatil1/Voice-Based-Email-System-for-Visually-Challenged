@@ -1,0 +1,93 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+{% load static %}
+
+	<body onmousedown = "SendPostRequestInbox(event)">
+     
+		<nav class="navbar navbar-dark navbar-expand-lg fixed-top  navbar-custom">
+			<div class="container"><a class="navbar-brand" style="font-size:200%;">VOICE BASED EMAIL FOR THE BLIND</a>
+			</div>
+		</nav>
+		
+		<br><br><br><br>
+		<header class=" text-left text-white">
+			<div class="masthead-content">
+				<div class="container" >
+					<center>
+						<h4 class="masthead-heading mb-0" style = "margin-top: 10px; font-size: 40px;color:black;">INBOX PAGE</h4>			
+						<br>
+							<h2 style="color: black;"> What would you like to do? <h2><br>
+					</center>
+					
+				<table align="center" >
+					<tr>
+						<td>
+							
+								<input href="compose.html"class="btn btn-primary btn-xl rounded-pill mt-2"
+								class="button" role="button"
+								style="width: 250px;  background-color: rgb(70, 175, 49); " type="submit" 
+								value="UNREAD" >
+						</td>
+					</tr>
+						
+					<tr>
+						<td>
+							
+								<input href="inbox.html"class="btn btn-primary btn-xl rounded-pill mt-2"
+								 role="button"
+								 style="width: 220px; margin-left:15px; background-color: rgb(74, 155, 58);" type="submit" 
+								value="SEARCH" >
+						</td>
+
+					</tr>
+						
+					<tr>
+						<td>
+							
+								<input href="options.html"class="btn btn-primary btn-xl rounded-pill mt-2" 
+								role="button" 
+								style="width: 200px; background-color: rgb(70, 173, 50); margin-left:25px;" type="submit"  
+								value="BACK">
+						</td>
+					</tr>
+						
+					
+					<tr>
+						<td>
+							
+								<input href="login.html"class="btn btn-primary btn-xl rounded-pill mt-1"
+								role="button"
+								style="width: 180px; background-color: rgb(38, 156, 15); margin-left:35px;"  type="submit" 
+								value="LOGOUT">
+						</td>
+					</tr>
+						
+
+				</table>
+				<br><br><br><br>
+		
+				</div>
+			</div>
+	
+		</header>
+		
+	<script>
+	function SendPostRequestInbox(event){
+		$.ajax({
+        url: "{% url 'homepage:inbox' %}",
+        method: 'POST',
+        data: { 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        success: function (data) {
+			if(data.result == 'success'){
+				window.location = "{% url 'homepage:options' %}";
+			}
+			else if(data.result == 'logout'){
+				window.location = "{% url 'homepage:login' %}";
+			}
+        }
+    });
+	}
+	</script>
+
+{% endblock %}
